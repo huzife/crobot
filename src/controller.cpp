@@ -31,21 +31,27 @@ void Controller::init(const char* port_name,
     sp_.setReadIntervalTimeout(0);
 }
 
-void Controller::open() {
-    if (sp_.open())
+bool Controller::open() {
+    if (sp_.open()) {
         std::cout << "Serial opened: " << sp_.getPortName() << std::endl;
-    else
-        std::cout << "Failed to open serial: " << sp_.getLastErrorMsg() << std::endl;
+    } else {
+        std::cerr << "Failed to open serial: " << sp_.getLastErrorMsg() << std::endl;
+        return false;
+    }
 
-    // start read
-    sp_.connectReadEvent(&listener_);
+    if (!sp_.connectReadEvent(&listener_)) {
+        std::cerr << "Failed to connect to read event" << std::endl;
+        return false;
+    }
     base_com_thread_ = std::thread{std::bind(&Controller::base_com_func, this)};
+
+    return true;
 }
 
 void Controller::write(const Request& req) {
     auto data = req.data();
     if (sp_.writeData(data.data(), data.size()) == -1)
-        std::cout << "Failed to send data: " << sp_.getLastErrorMsg() << std::endl;
+        std::cerr << "Failed to send data: " << sp_.getLastErrorMsg() << std::endl;
 }
 
 void Controller::receive_data(uint8_t* data, uint32_t len) {

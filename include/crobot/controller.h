@@ -30,7 +30,7 @@ public:
               itas109::DataBits databits,
               itas109::StopBits stopbits,
               itas109::FlowControl flow_control);
-    void open();
+    bool open();
 
     // receive
     void receive_data(uint8_t* data, uint32_t len);
