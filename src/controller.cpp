@@ -39,7 +39,7 @@ bool Controller::open() {
         return false;
     }
 
-    if (!sp_.connectReadEvent(&listener_)) {
+    if (sp_.connectReadEvent(&listener_)) {
         std::cerr << "Failed to connect to read event" << std::endl;
         return false;
     }
