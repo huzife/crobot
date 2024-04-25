@@ -62,11 +62,23 @@ void Controller::receive_data(uint8_t* data, uint32_t len) {
 
 void Controller::process_response(const Response& resp) {
     switch (resp.type()) {
+    case Message_Type::SET_PID_INTERVAL:
+        callbacks_.set_pid_interval_callback();
+        break;
+    case Message_Type::SET_COUNT_PER_REV:
+        callbacks_.set_count_per_rev_callback();
+        break;
+    case Message_Type::SET_CORRECTION_FACTOR:
+        callbacks_.set_correction_factor_callback();
+        break;
     case Message_Type::SET_VELOCITY:
         callbacks_.set_velocity_callback();
         break;
     case Message_Type::GET_ODOMETRY:
         callbacks_.get_odometry_callback(resp.get_odometry_resp());
+        break;
+    case Message_Type::RESET_ODOMETRY:
+        callbacks_.reset_odometry_callback();
         break;
     case Message_Type::GET_IMU_TEMPERATURE:
         callbacks_.get_imu_temperature_callback(resp.get_imu_temperature_resp());
