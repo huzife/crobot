@@ -11,13 +11,15 @@ public:
 
     virtual void set_count_per_rev_callback() = 0;
 
+    virtual void set_robot_base_callback() = 0;
+
     virtual void set_correction_factor_callback() = 0;
 
     virtual void set_velocity_callback() = 0;
 
-    virtual void get_odometry_callback(const Get_Odometry_Resp& resp) = 0;
-
     virtual void reset_odometry_callback() = 0;
+
+    virtual void get_odometry_callback(const Get_Odometry_Resp& resp) = 0;
 
     virtual void get_imu_temperature_callback(const Get_IMU_Temperature_Resp& resp) = 0;
 

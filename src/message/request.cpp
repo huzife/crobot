@@ -1,6 +1,7 @@
 #include "crobot/message/request.h"
 #include "crobot/message/type.h"
 #include "crobot/message/utils.h"
+#include <cstring>
 
 using namespace std;
 
@@ -32,6 +33,51 @@ vector<uint8_t> Set_Count_Per_Rev_Req::data() const {
     ret[3] = static_cast<uint8_t>(Message_Type::SET_COUNT_PER_REV);
     ret[4] = cpr_ >> 8;
     ret[5] = cpr_ & 0xFF;
+
+    return ret;
+}
+
+Set_Robot_Base_2WD_Req::Set_Robot_Base_2WD_Req(const Robot_Base_2WD_Param& param)
+    : param_(param) {}
+
+vector<uint8_t> Set_Robot_Base_2WD_Req::data() const {
+    vector<uint8_t> ret(0x0D);
+    ret[0] = 0xFE;
+    ret[1] = 0xEF;
+    ret[2] = 0x02 + sizeof(param_);
+    ret[3] = static_cast<uint8_t>(Message_Type::SET_ROBOT_BASE);
+    ret[4] = static_cast<uint8_t>(Robot_Base_Type::ROBOT_BASE_2WD);
+    memcpy(ret.data() + 5, &param_, sizeof(param_));
+
+    return ret;
+}
+
+Set_Robot_Base_3WO_Req::Set_Robot_Base_3WO_Req(const Robot_Base_3WO_Param& param)
+    : param_(param) {}
+
+vector<uint8_t> Set_Robot_Base_3WO_Req::data() const {
+    vector<uint8_t> ret(0x0D);
+    ret[0] = 0xFE;
+    ret[1] = 0xEF;
+    ret[2] = 0x02 + sizeof(param_);
+    ret[3] = static_cast<uint8_t>(Message_Type::SET_ROBOT_BASE);
+    ret[4] = static_cast<uint8_t>(Robot_Base_Type::ROBOT_BASE_3WO);
+    memcpy(ret.data() + 5, &param_, sizeof(param_));
+
+    return ret;
+}
+
+Set_Robot_Base_4WD_Req::Set_Robot_Base_4WD_Req(const Robot_Base_4WD_Param& param)
+    : param_(param) {}
+
+vector<uint8_t> Set_Robot_Base_4WD_Req::data() const {
+    vector<uint8_t> ret(0x0D);
+    ret[0] = 0xFE;
+    ret[1] = 0xEF;
+    ret[2] = 0x02 + sizeof(param_);
+    ret[3] = static_cast<uint8_t>(Message_Type::SET_ROBOT_BASE);
+    ret[4] = static_cast<uint8_t>(Robot_Base_Type::ROBOT_BASE_4WD);
+    memcpy(ret.data() + 5, &param_, sizeof(param_));
 
     return ret;
 }
@@ -70,22 +116,22 @@ vector<uint8_t> Set_Velocity_Req::data() const {
     return ret;
 }
 
-vector<uint8_t> Get_Odometry_Req::data() const {
-    vector<uint8_t> ret(4);
-    ret[0] = 0xFE;
-    ret[1] = 0xEF;
-    ret[2] = 0x01;
-    ret[3] = static_cast<uint8_t>(Message_Type::GET_ODOMETRY);
-
-    return ret;
-}
-
 vector<uint8_t> Reset_Odometry_Req::data() const {
     vector<uint8_t> ret(4);
     ret[0] = 0xFE;
     ret[1] = 0xEF;
     ret[2] = 0x01;
     ret[3] = static_cast<uint8_t>(Message_Type::RESET_ODOMETRY);
+
+    return ret;
+}
+
+vector<uint8_t> Get_Odometry_Req::data() const {
+    vector<uint8_t> ret(4);
+    ret[0] = 0xFE;
+    ret[1] = 0xEF;
+    ret[2] = 0x01;
+    ret[3] = static_cast<uint8_t>(Message_Type::GET_ODOMETRY);
 
     return ret;
 }
