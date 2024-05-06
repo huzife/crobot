@@ -3,7 +3,7 @@
 
 enum class Message_Type: unsigned char {
     SET_PID_INTERVAL,
-    SET_COUNT_PER_REV,
+    SET_MOTOR_PARAM,
     SET_ROBOT_BASE,
     SET_CORRECTION_FACTOR,
     SET_VELOCITY,

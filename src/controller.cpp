@@ -65,8 +65,8 @@ void Controller::process_response(const Response& resp) {
     case Message_Type::SET_PID_INTERVAL:
         callbacks_.set_pid_interval_callback();
         break;
-    case Message_Type::SET_COUNT_PER_REV:
-        callbacks_.set_count_per_rev_callback();
+    case Message_Type::SET_MOTOR_PARAM:
+        callbacks_.set_motor_param_callback();
         break;
     case Message_Type::SET_ROBOT_BASE:
         callbacks_.set_robot_base_callback();

@@ -26,15 +26,16 @@ private:
     uint16_t pid_interval_;
 };
 
-class Set_Count_Per_Rev_Req: public Request {
+class Set_Motor_Param_Req: public Request {
 public:
-    Set_Count_Per_Rev_Req(uint16_t cpr);
-    ~Set_Count_Per_Rev_Req() = default;
+    Set_Motor_Param_Req(uint32_t cpr, bool reverse);
+    ~Set_Motor_Param_Req() = default;
 
     std::vector<uint8_t> data() const override;
 
 private:
-    uint16_t cpr_;
+    uint32_t cpr_;
+    bool reverse_;
 };
 
 class Set_Robot_Base_Req: public Request {
@@ -76,15 +77,27 @@ private:
     Robot_Base_4WD_Param param_;
 };
 
+class Set_Robot_Base_4MEC_Req: public Set_Robot_Base_Req {
+public:
+    Set_Robot_Base_4MEC_Req(const Robot_Base_4MEC_Param& param);
+    ~Set_Robot_Base_4MEC_Req() = default;
+
+    std::vector<uint8_t> data() const override;
+
+private:
+    Robot_Base_4MEC_Param param_;
+};
+
 class Set_Correction_Factor_Req: public Request {
 public:
-    Set_Correction_Factor_Req(float linear, float angular);
+    Set_Correction_Factor_Req(float linear_x, float linear_y, float angular);
     ~Set_Correction_Factor_Req() = default;
 
     std::vector<uint8_t> data() const override;
 
 private:
-    float linear_;
+    float linear_x_;
+    float linear_y_;
     float angular_;
 };
 

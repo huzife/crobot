@@ -9,7 +9,7 @@ class Controller_Callbacks {
 public:
     virtual void set_pid_interval_callback() = 0;
 
-    virtual void set_count_per_rev_callback() = 0;
+    virtual void set_motor_param_callback() = 0;
 
     virtual void set_robot_base_callback() = 0;
 
